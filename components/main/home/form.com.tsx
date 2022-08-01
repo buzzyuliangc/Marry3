@@ -13,9 +13,10 @@ import { Status0 } from "./form/status-0";
 import { StatusPending } from "./form/status-pending";
 import { useEffect, useRef } from "react";
 import { loveBubbles } from "../../../utils/bubbles";
+import { SolpassStore } from "../../../stores/main/solpass.store";
 
 export const FormPage = (props: {}) => {
-  const marryStore = useStore(MarryStore);
+  const solpassStore = useStore(SolpassStore);
   const walletStore = useStore(WalletStore);
   const circleDom = useRef<HTMLDivElement>(null);
   let hasLoadedBubbles = false;
@@ -47,9 +48,9 @@ export const FormPage = (props: {}) => {
             <div className={styles.t1}>
               <Trans id="国库收益(ETH)" />
             </div>
-            <div className={styles.t2}>{marryStore.ethBalanceFormated}</div>
+            <div className={styles.t2}>{solpassStore.ethBalanceFormated}</div>
             <div className={styles.t3}>
-              <Trans id="协议已见证了" /> {marryStore.marryCount}{" "}
+              <Trans id="协议已见证了" /> {solpassStore.marryCount}{" "}
               <Trans id="对新人" />
             </div>
             <div className={styles.t4}>
@@ -82,14 +83,14 @@ export const FormPage = (props: {}) => {
         <div className={styles.right}>
           <div className={styles.mainFormWrapper}>
             <div className={styles.mainFormBG}></div>
-            {marryStore.pendingOffer.status === 0 ||
-            marryStore.pendingOffer.status === 1 ||
-            marryStore.pendingOffer.status === 2 ? (
+            {solpassStore.pendingOffer.status === 0 ||
+              solpassStore.pendingOffer.status === 1 ||
+              solpassStore.pendingOffer.status === 2 ? (
               <StatusPending />
             ) : (
               <Status0 />
             )}
-            {!marryStore.info.Aaddress ? (
+            {!solpassStore.info.Aaddress ? (
               <div className={styles.noconnectWrapper}>
                 <div
                   className={styles.noconnect}
@@ -103,7 +104,7 @@ export const FormPage = (props: {}) => {
               </div>
             ) : null}
             <Steps
-              current={marryStore.stepStatus()}
+              current={solpassStore.stepStatus()}
               progressDot={customDot}
               className={styles.steps}
               responsive={false}

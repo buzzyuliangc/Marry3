@@ -10,7 +10,6 @@ import { WalletStore } from "./wallet.store";
 
 import { NFTStore } from "./nfts.store";
 const walletStore = useStore(WalletStore);
-// 基地
 
 export type Offers = {
   id?: string;
@@ -18,17 +17,12 @@ export type Offers = {
   Baddress?: string;
   Asignature?: string;
   Bsignature?: string | null;
-  Asex?: number | null;
-  Bsex?: number | null;
   Aname?: string | null;
   Bname?: string | null;
   status?: number;
-  AtokenId?: string | null;
-  BtokenId?: string | null;
+  tokenId?: string | null;
   Acomment?: string | null;
-  Bcomment?: string | null;
-  Acover?: string | null;
-  Bcover?: string | null;
+  cover?: string | null;
   inviteLink?: string | null;
 };
 export class OfferStore implements IStore {
@@ -39,10 +33,7 @@ export class OfferStore implements IStore {
 
   form = {
     Baddress: "",
-    Bcomment: "Yes, i will",
-    Bcover: null,
     Bname: "",
-    Bsex: 1,
   };
 
   is404 = false;
@@ -69,10 +60,7 @@ export class OfferStore implements IStore {
       signature: "",
       id: this.offer.id,
       address: (await walletStore.getWalletInfo()).account,
-      Bsex: this.form.Bsex,
       Bname: this.form.Bname,
-      Bcomment: this.form.Bcomment,
-      Bcover: this.form.Bcover,
     };
     if (!body.Bname) {
       message.error("please input your nick");
@@ -87,25 +75,6 @@ export class OfferStore implements IStore {
         );
         return;
       }
-    }
-    if (!body.Bcover) {
-      const confirm = async () => {
-        return new Promise((resolve, reject) => {
-          Modal.confirm({
-            title: "Notice",
-            content:
-              "You have not yet selected PFP, are you sure you want to continue？if continue, your PFP will be set to default image",
-            onOk: () => {
-              resolve(true);
-            },
-            onCancel: () => {
-              // throw new Error("cancel");
-              reject(new Error("cancel"));
-            },
-          });
-        });
-      };
-      await confirm();
     }
     const msg = await walletStore.signMessage(nonce);
     body.signature = msg;

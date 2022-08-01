@@ -9,10 +9,11 @@ const config = {
   },
   address: {
     marry3: "0x3D6822377A86CfB9ca0e5C52fbe865f9d63BfE70",
+    solpass: "0x00",
   },
   tokenName: "token",
   siteName:
-    "Marry with another 0x address, get the Soulbound NFT Certificate on the chain, a non-financial Dapp",
+    "Rumble, Your Digital Existance",
   ethName: "ETH",
   base_url: "/",
   api_url: "",
@@ -34,6 +35,7 @@ const config_local = {
   },
   address: {
     marry3: "0x2984Ed3c0A8d46a8AaE3066F164D590fAF11f557",
+    solpass: "0x00",
   },
   tokenName: "token",
   siteName: "site",
@@ -56,10 +58,11 @@ const config_online = {
   },
   address: {
     marry3: "0xb92cF71Bb9dF4Dd30598fec340C1b8f22Ea30846",
+    solpass: "0x00",
   },
   tokenName: "token",
   siteName:
-    "Marry with another 0x address, get Paired Soulbound NFT Certificate on the chain, a non-financial Dapp",
+    "Rumble, Your Digital Existance",
   ethName: "ETH",
   base_url: "/",
   api_url: "",

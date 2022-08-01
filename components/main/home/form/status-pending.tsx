@@ -246,14 +246,14 @@ export const StatusPending = (props: {}) => {
                 );
                 window.open(
                   "https://twitter.com/intent/tweet?text=" +
-                    encodeURIComponent(
-                      "I just marry in web3 with my lover, and mint Paired Soubound Marry3 Certificate, https://marry3.love/i/" +
-                        pairedInfo[0].tokenId +
-                        " @marryinweb3 #marry3"
-                    )
+                  encodeURIComponent(
+                    "I just marry in web3 with my lover, and mint Paired Soubound Marry3 Certificate, https://marry3.love/i/" +
+                    pairedInfo[0].tokenId +
+                    " @marryinweb3 #marry3"
+                  )
                 );
               }
-            } catch (e) {}
+            } catch (e) { }
 
             await marryStore.getOffer();
           } catch (e) {
@@ -374,15 +374,14 @@ export const StatusPending = (props: {}) => {
               "https://twitter.com/intent/tweet?text=" +
               encodeURIComponent(
                 "I just marry in web3 with my lover, and mint Paired Soubound Marry3 Certificate, https://marry3.love/i/" +
-                  marryStore.pendingOffer.AtokenId +
-                  " @marryinweb3 #marry3"
+                marryStore.pendingOffer.AtokenId +
+                " @marryinweb3 #marry3"
               )
             }
             target={"_blank"}
           >
             <TwitterOutlined
-              size={20}
-              style={{ fontSize: "18px", color: "#0057D6" }}
+              style={{ fontSize: "18px", color: "#0057D6", width: "40px", height: "40px" }}
             />
           </a>
         </>
@@ -406,7 +405,7 @@ export const StatusPending = (props: {}) => {
           >
             <Trans id="Mint " />(
             {marryStore.marryPrice &&
-            Number(utils.formatEther(marryStore.marryPrice)) == 0
+              Number(utils.formatEther(marryStore.marryPrice)) == 0
               ? "Free"
               : marryStore.marryPriceFormated + " Ξ"}
             )
@@ -481,9 +480,9 @@ export const StatusPending = (props: {}) => {
               "https://twitter.com/intent/tweet?text=" +
               encodeURIComponent(
                 "I just make an offer in marry3.love, anyone want to marry with me? we will get two Soubound Marry3 Certificate NFT, and witness by code. " +
-                  window.location.origin +
-                  `/offer/${marryStore.pendingOffer.id}` +
-                  " @marryinweb3 #marry3"
+                window.location.origin +
+                `/offer/${marryStore.pendingOffer.id}` +
+                " @marryinweb3 #marry3"
               )
             }
             target={"_blank"}
@@ -499,8 +498,7 @@ export const StatusPending = (props: {}) => {
               visible={true}
             >
               <TwitterOutlined
-                size={20}
-                style={{ fontSize: "18px", color: "#0057D6" }}
+                style={{ fontSize: "18px", color: "#0057D6", width: "40px", height: "40px" }}
               />
             </Popover>
           </a>

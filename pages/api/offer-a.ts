@@ -7,8 +7,8 @@ import { verifyMarried } from "../../lib/verify";
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === "POST") {
     try {
-      // @todo 首先去合约中检查是否已经结婚
       // verify signature
+
       if (!req.body.nonce || !req.body.signature) {
         return res.status(400).json({
           message: "no valid signature",
@@ -29,33 +29,21 @@ const handler: NextApiHandler = async (req, res) => {
           message: "error signature",
         });
       }
+
       const data = {
         Aaddress: req.body.Aaddress.toLowerCase(),
-        Asex: req.body.Asex,
         Aname: req.body.Aname,
         Asignature: req.body.signature,
         Acomment: req.body.Acomment,
-        Acover: req.body.Acover,
+        cover: req.body.cover,
         bgIndex: Math.floor(Math.random() * 9) + 1,
       };
-      if (!data.Acover?.startsWith("http")) {
-        data.Acover = "";
+      if (!data.cover?.startsWith("http")) {
+        data.cover = "";
       }
       if (!data.Aname) {
         return res.status(400).json({
           message: "name empty",
-        });
-      }
-      if (data.Asex === null || data.Asex === undefined) {
-        return res.status(400).json({
-          message: "sex empty",
-        });
-      }
-      const married = await verifyMarried(data.Aaddress);
-
-      if (married) {
-        return res.status(400).json({
-          message: "you have married",
         });
       }
 

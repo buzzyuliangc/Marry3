@@ -34,30 +34,19 @@ const handler: NextApiHandler = async (req, res) => {
         Bsignature: req.body.signature,
         status: 1,
         Bname: req.body.Bname,
-        Bsex: req.body.Bsex,
-        Bcomment: req.body.Bcomment,
-        Bcover: req.body.Bcover,
       };
-      if (!data.Bcover?.startsWith("http")) {
-        data.Bcover = "";
-      }
       if (!data.Bname) {
         return res.status(400).json({
           message: "name empty",
         });
       }
-      if (data.Bsex === null || data.Bsex === undefined) {
-        return res.status(400).json({
-          message: "sex empty",
-        });
-      }
-      const marriedB = await verifyMarried(data.Baddress);
+      /*const marriedB = await verifyMarried(data.Baddress);
 
       if (marriedB) {
         return res.status(400).json({
           message: "you have married",
         });
-      }
+      }*/
       // check
       const result = await prisma.offers.findFirst({
         where: {
@@ -71,11 +60,11 @@ const handler: NextApiHandler = async (req, res) => {
           message: "no offer to accept",
         });
       }
-      if (result.Aaddress == data.Baddress) {
+      /*if (result.Aaddress == data.Baddress) {
         return res.status(400).json({
           message: "Aaddress and Baddress is same",
         });
-      }
+      }*/
       // update offer
       const offer = await prisma.offers.update({
         data: data,

@@ -22,27 +22,28 @@ import { StatusPending } from "../../components/main/home/form/status-pending";
 import { FormDesc } from "../../components/main/home/form/desc";
 import { FormPage } from "../../components/main/home/form.com";
 import { GAS } from "../../components/main/home/gas";
+import { SolpassStore } from "../../stores/main/solpass.store";
 // import "../../public/mo.umd.js";
 
 export default function Upgrade(props) {
   const wallet = useStore(WalletStore);
   const nftStore = useStore(NFTStore);
 
-  const marryStore = useStore(MarryStore);
+  const solpassStore = useStore(SolpassStore);
 
   useEffect(() => {
     nftStore.getNFTS();
-    marryStore.getMintInfo();
+    solpassStore.getMintInfo();
     (async () => {
       const walletInfo = await wallet.getWalletInfo();
-      marryStore.info.Aaddress = walletInfo.account;
-      marryStore.info.Aname = walletInfo.ens;
+      solpassStore.info.Aaddress = walletInfo.account;
+      solpassStore.info.Aname = walletInfo.ens;
       const loading = message.loading("loading...", 0);
-      await marryStore.getOffer();
+      await solpassStore.getOffer();
       loading();
     })();
 
-    setInterval(marryStore.getNowGas, 10000);
+    setInterval(solpassStore.getNowGas, 10000);
   }, []);
 
   return useObserver(() => {

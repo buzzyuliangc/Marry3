@@ -49,7 +49,7 @@ export default function Offer(props) {
   const [bconnectloading, setBconnectloading] = useState(false);
   const qrcode = useRef(null);
   const shareText =
-    "Marry in Web3 with another 0x address, mint the Paired Soulbound NFT Certificate on the chain, a non-financial Dapp";
+    "Rumble, Mint Your Digital Existance for Your Gang";
   useEffect(() => {
     if (router.query.id) {
       getOffer();
@@ -165,8 +165,7 @@ export default function Offer(props) {
                 target={"_blank"}
               >
                 <TwitterOutlined
-                  size={20}
-                  style={{ fontSize: "25px", color: "#0057D6" }}
+                  style={{ fontSize: "25px", color: "#0057D6", width: "40px", height: "40px" }}
                 />
               </a>
               <a
@@ -202,8 +201,8 @@ export default function Offer(props) {
                 <p className={styles.address}>
                   {offer?.Aaddress
                     ? offer?.Aaddress.substr(0, 6) +
-                      "..." +
-                      offer?.Aaddress.substr(offer?.Aaddress.length - 12, 12)
+                    "..." +
+                    offer?.Aaddress.substr(offer?.Aaddress.length - 12, 12)
                     : ""}
                 </p>
                 <p className={styles.actions}>
@@ -246,15 +245,15 @@ export default function Offer(props) {
                   borderBottomRightRadius: "50%",
                   zIndex: 20,
                 }}
-                src={offer?.Bcover || "/heart-cover.png"}
+                src={offer?.Acover || "/heart-cover.png"}
               />
               <div className={styles.detail}>
                 <p className={styles.name}>{offer?.Bname}</p>
                 <p className={styles.address}>
                   {offer?.Baddress
                     ? offer?.Baddress.substr(0, 6) +
-                      "..." +
-                      offer?.Baddress.substr(offer?.Baddress.length - 12, 12)
+                    "..." +
+                    offer?.Baddress.substr(offer?.Baddress.length - 12, 12)
                     : ""}
                 </p>
                 <p className={styles.actions}>

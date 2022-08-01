@@ -10,7 +10,7 @@ const handler: NextApiHandler = async (req, res) => {
       const id = req.query.id as string;
       const offer = await prisma.offers.findFirst({
         where: {
-          OR: [{ AtokenId: id }, { BtokenId: id }],
+          tokenId: id,
           type: 0,
         },
         orderBy: {

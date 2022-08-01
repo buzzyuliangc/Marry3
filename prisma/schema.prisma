@@ -27,13 +27,21 @@ model Offers {
     updatedAt  DateTime  @updatedAt
     AtokenId   String?
     BtokenId   String?
+    tokenId    String?
     Acomment   String?
     Bcomment   String?
     Acover     String?
     Bcover     String?
+    cover      String?
     imageData  String?
     imageDataB String?
     bgIndex    Int?
     blockNo    String?
     mintedAt   DateTime?
+}
+
+model ContractAddr {
+    id         String    @id @default(uuid())
+    Iaddress   String
+    Caddress   String[]    
 }

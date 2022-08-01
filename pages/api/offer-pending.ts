@@ -8,7 +8,7 @@ const handler: NextApiHandler = async (req, res) => {
   if (req.method === "GET") {
     try {
       const Aaddress = req.query.Aaddress as string;
-      const offer = await prisma.offers.findFirst({
+      const offers = await prisma.offers.findMany({
         where: {
           Aaddress: Aaddress.toLowerCase(),
           status: {
@@ -20,14 +20,16 @@ const handler: NextApiHandler = async (req, res) => {
           createdAt: "desc",
         },
       });
-      if (!offer) {
+      if (!offers) {
         return res.status(400).json({
           message: "no offer",
         });
       } else {
-        delete offer.Asignature;
-        delete offer.Bsignature;
-        res.status(200).json(offer);
+        offers.forEach(function (offer) {
+          delete offer.Asignature;
+          delete offer.Bsignature;
+        });
+        res.status(200).json(offers);
       }
     } catch (e) {
       console.error(e);

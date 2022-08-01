@@ -27,11 +27,11 @@ export function WalletBar() {
             <span className={styles.sub}>
               {walletStore.walletInfo.account
                 ? walletStore.walletInfo.account.substr(0, 6) +
-                  "..." +
-                  walletStore.walletInfo.account.substr(
-                    walletStore.walletInfo.account.length - 4,
-                    4
-                  )
+                "..." +
+                walletStore.walletInfo.account.substr(
+                  walletStore.walletInfo.account.length - 4,
+                  4
+                )
                 : ""}
             </span>
           </div>
@@ -81,22 +81,21 @@ export const Header = (props: {
         style={{ display: props.hideAll ? "none" : "" }}
       >
         <span>
-          <a href="/" title={t`结婚`}>
-            <Trans id="建立关系" />
+          <a href="/" title='Issue SBT'>
+            Issue SBT
           </a>
         </span>
-        <span>
-          <a href="/divorce" title={t`离婚`}>
-            <Trans id="解除关系" />
-          </a>
-        </span>
-
-        <a href="/explore" title={t`已婚列表`} target={"_blank"}>
-          <Trans id="档案室" />
+        <a href="/explore" title="My Tokens" target={"_blank"}>
+          My Tokens
           {!props.hideIndex ? (
             <span style={{ fontSize: "10px", marginLeft: "5px" }}>↗</span>
           ) : null}
         </a>
+        <span>
+          <a href="/divorce" title='Burn SBT'>
+            Burn SBT
+          </a>
+        </span>
       </div>
       <div className={styles.right}>
         <img
