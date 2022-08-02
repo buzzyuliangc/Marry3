@@ -1263,7 +1263,7 @@
   "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz"
   "version" "2.11.5"
 
-"@prisma/client@^3.10.0":
+"@prisma/client@^3.15.2":
   "integrity" "sha512-ErqtwhX12ubPhU4d++30uFY/rPcyvjk+mdifaZO5SeM21zS3t4jQrscy8+6IyB0GIYshl5ldTq6JSBo1d63i8w=="
   "resolved" "https://registry.npmjs.org/@prisma/client/-/client-3.15.2.tgz"
   "version" "3.15.2"

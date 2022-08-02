@@ -22,14 +22,17 @@ export type Offers = {
     Aname?: string | null;
     Bname?: string | null;
     status?: number;
+    burnAuth?: number;
+    nftName?: string | null;
+    nftSymbol?: string | null;
     tokenId?: string | null;
     Acomment?: string | null;
     cover?: string | null;
     inviteLink?: string | null;
     bgIndex?: number | null;
     mintedAt?: Date | null;
+    expirationDate?: Date | null;
     imageData?: string;
-    imageData2?: string;
 };
 export class SolpassStore implements IStore {
     static type = StoreType.solpass;
@@ -97,6 +100,10 @@ export class SolpassStore implements IStore {
             Aname: this.info.Aname,
             Acomment: this.info.Acomment,
             cover: this.info.cover,
+            burnAuth: this.info.burnAuth,
+            nftName: this.info.nftName,
+            nftSymbol: this.info.nftSymbol,
+            expirationDate: this.info.expirationDate,
         };
         if (!body.Acomment) {
             message.error("commet empty");
@@ -286,9 +293,9 @@ export class SolpassStore implements IStore {
 
         const walletInfo = await walletStore.getWalletInfo();
         await this.getMerkle();
-        const mintPrice = await Marry3Contract().getPriceByProof(this.proof);
-        this.mintPrice = mintPrice;
-        this.mintPriceFormated = utils.formatEther(mintPrice);
+        //const mintPrice = await Marry3Contract().getPriceByProof(this.proof);
+        this.mintPrice = BigNumber.from('42');
+        this.mintPriceFormated = utils.formatEther(this.mintPrice);
         console.log("mintPrice", this.mintPriceFormated);
 
         // const ethBalance = await (

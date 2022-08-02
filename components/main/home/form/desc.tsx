@@ -4,28 +4,28 @@ import { Collapse, Tooltip } from "antd";
 import { useObserver } from "mobx-react";
 import { QuestionCircleOutlined, LockOutlined } from "@ant-design/icons";
 import styles from "./../../../../pages/home/home.module.less";
-import { MarryStore } from "../../../../stores/main/marry.store";
 import useStore from "../../../../stores/useStore";
 import { web3Config } from "../../../../stores/config";
+import { SolpassStore } from "../../../../stores/main/solpass.store";
 
 export const FormDesc = (props: {}) => {
-  const marryStore = useStore(MarryStore);
+  const solpassStore = useStore(SolpassStore);
   return useObserver(() => (
     <>
-      {marryStore.pendingOffer?.status == 2 &&
-      marryStore.pendingOffer.AtokenId ? (
+      {solpassStore.pendingOffer?.status == 2 &&
+        solpassStore.pendingOffer.tokenId ? (
         <>
           <div className={styles.price_desc}>
             <Trans id="查看 Marry3 Certificate 详情" />:
             <a
-              href={`/i/${marryStore.pendingOffer.AtokenId}`}
+              href={`/i/${solpassStore.pendingOffer.tokenId}`}
               target={"_blank"}
               style={{ fontWeight: "500", marginLeft: "30px" }}
             >
-              Token #{marryStore.pendingOffer.AtokenId}
+              Token #{solpassStore.pendingOffer.tokenId}
             </a>
             <a
-              href={`${web3Config.opensea}${web3Config.address.marry3}/${marryStore.pendingOffer.AtokenId}`}
+              href={`${web3Config.opensea}${web3Config.address.solpass}/${solpassStore.pendingOffer.tokenId}`}
               target={"_blank"}
               style={{ fontWeight: "500", marginLeft: "10px" }}
             >
@@ -39,14 +39,14 @@ export const FormDesc = (props: {}) => {
               />
             </a>
             <a
-              href={`/i/${marryStore.pendingOffer.BtokenId}`}
+              href={`/i/${solpassStore.pendingOffer.tokenId}`}
               target={"_blank"}
               style={{ fontWeight: "500", marginLeft: "30px" }}
             >
-              Token #{marryStore.pendingOffer.BtokenId}
+              Token #{solpassStore.pendingOffer.tokenId}
             </a>
             <a
-              href={`${web3Config.opensea}${web3Config.address.marry3}/${marryStore.pendingOffer.BtokenId}`}
+              href={`${web3Config.opensea}${web3Config.address.marry3}/${solpassStore.pendingOffer.tokenId}`}
               target={"_blank"}
               style={{ fontWeight: "500", marginLeft: "10px" }}
             >

@@ -88,13 +88,15 @@ export class WalletStore implements IStore {
 
   async getWalletInfo(): Promise<IWallet> {
     return new Promise((resolve) => {
-      if (this.walletInfo.status !== "connected") {
-        bus.on("connected", () => {
-          resolve(this.walletInfo);
-        });
-      } else {
+      console.log('status is', this.walletInfo.status);
+
+      //if (this.walletInfo.status !== "connected") {
+      bus.on("connected", () => {
         resolve(this.walletInfo);
-      }
+      });
+      /*} else {
+        resolve(this.walletInfo);
+      }*/
     });
   }
 

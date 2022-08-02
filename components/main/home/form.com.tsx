@@ -4,7 +4,6 @@ import { Collapse, message, Steps, StepsProps } from "antd";
 import { useObserver } from "mobx-react";
 import { QuestionCircleOutlined, LockOutlined } from "@ant-design/icons";
 import { web3Config } from "../../../stores/config";
-import { MarryStore } from "../../../stores/main/marry.store";
 import { WalletStore } from "../../../stores/main/wallet.store";
 import useStore from "../../../stores/useStore";
 import styles from "./../../../pages/home/home.module.less";

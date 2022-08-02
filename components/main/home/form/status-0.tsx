@@ -1,4 +1,5 @@
 import { ethers } from "ethers"
+import type { RadioChangeEvent } from 'antd';
 import {
   Button,
   Collapse,
@@ -7,8 +8,7 @@ import {
   Input,
   Menu,
   message,
-  Select,
-  Space,
+  Radio,
   Tooltip,
   Upload
 } from "antd";
@@ -33,7 +33,6 @@ import { SolpassStore } from "../../../../stores/main/solpass.store";
 
 import type { UploadChangeParam } from 'antd/es/upload';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { MarryStore } from "../../../../stores/main/marry.store";
 
 
 
@@ -50,11 +49,12 @@ export const Status0 = (props: {}) => {
 
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
+  //radio value controller
+  const [value, setValue] = useState(0);
 
-  const getBase64 = (img: RcFile, callback: (url: string) => void) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result as string));
-    reader.readAsDataURL(img);
+  const radioOnChange = (e: RadioChangeEvent) => {
+    solpassStore.info.burnAuth = e.target.value;
+    setValue(e.target.value);
   };
 
   const beforeUpload = (file: RcFile) => {
@@ -167,7 +167,7 @@ export const Status0 = (props: {}) => {
           {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
         </Upload>
       </Form.Item>
-      <Form.Item label='your name'>
+      <Form.Item label='Your Name'>
         <Input.Group
           compact
           style={{
@@ -199,6 +199,24 @@ export const Status0 = (props: {}) => {
             solpassStore.info.Acomment = e.target.value;
           }}
         />
+      </Form.Item>
+      <Form.Item
+        label={
+          <span>
+            Select Who Can Burn The Pass
+            <Tooltip
+              title="The selected burn authorization will be shown to pass receiver before they sign on it."
+            >
+              <QuestionCircleOutlined style={{ marginLeft: "5px" }} />
+            </Tooltip>
+          </span>
+        }>
+        <Radio.Group onChange={radioOnChange} value={value}>
+          <Radio value={0}>Issuer Only</Radio>
+          <Radio value={1}>Receiver Only</Radio>
+          <Radio value={2}>Both Parties</Radio>
+          <Radio value={3}>Neither Parties</Radio>
+        </Radio.Group>
       </Form.Item>
 
       {solpassStore.info.Aaddress ? (

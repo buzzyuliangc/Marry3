@@ -34,6 +34,7 @@ export class OfferStore implements IStore {
   form = {
     Baddress: "",
     Bname: "",
+
   };
 
   is404 = false;
