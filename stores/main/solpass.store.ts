@@ -17,6 +17,7 @@ export type Offers = {
     id?: string;
     Aaddress?: string;
     Baddress?: string;
+    contractId?: string;
     Asignature?: string;
     Bsignature?: string | null;
     Aname?: string | null;
@@ -24,7 +25,6 @@ export type Offers = {
     status?: number;
     burnAuth?: number;
     nftName?: string | null;
-    nftSymbol?: string | null;
     tokenId?: string | null;
     Acomment?: string | null;
     cover?: string | null;
@@ -46,7 +46,8 @@ export class SolpassStore implements IStore {
     marryCount = 0;
 
     info: Offers = {
-
+        burnAuth: 0,
+        expirationDate: null
     };
 
     pendingOffer: Offers = {};
@@ -102,31 +103,19 @@ export class SolpassStore implements IStore {
             cover: this.info.cover,
             burnAuth: this.info.burnAuth,
             nftName: this.info.nftName,
-            nftSymbol: this.info.nftSymbol,
             expirationDate: this.info.expirationDate,
         };
         if (!body.Acomment) {
-            message.error("commet empty");
+            message.error("solpass description empty");
+            return;
+        }
+        if (!body.nftName) {
+            message.error("solpass name empty");
             return;
         }
         if (!body.cover) {
-            const confirm = async () => {
-                return new Promise((resolve, reject) => {
-                    Modal.confirm({
-                        title: "Notice",
-                        content:
-                            "You have not yet uploaded a cover for the pass, are you sure you want to continue？if continue, we will set a default image for you",
-                        onOk: () => {
-                            resolve(true);
-                        },
-                        onCancel: () => {
-                            // throw new Error("cancel");
-                            reject(new Error("cancel"));
-                        },
-                    });
-                });
-            };
-            await confirm();
+            message.error("solpass cover empty");
+            return;
         }
         if (body.Aname?.indexOf(".eth") != -1) {
             const ens = await walletStore.getENS(this.info.Aaddress);

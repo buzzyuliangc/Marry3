@@ -1,8 +1,9 @@
 import { ethers } from "ethers"
-import type { RadioChangeEvent } from 'antd';
+import type { RadioChangeEvent, DatePickerProps } from 'antd';
 import {
   Button,
-  Collapse,
+  DatePicker,
+  Space,
   Dropdown,
   Form,
   Input,
@@ -23,7 +24,6 @@ import { useObserver } from "mobx-react";
 import wallet from "../../../../contracts/wallet";
 import styles from "./../../../../pages/home/home.module.less";
 import useStore from "../../../../stores/useStore";
-import { NFTStore } from "../../../../stores/main/nfts.store";
 import { useEffect, useState } from "react";
 import { messages } from "../../../../locale/en";
 import { WalletStore } from "../../../../stores/main/wallet.store";
@@ -33,6 +33,7 @@ import { SolpassStore } from "../../../../stores/main/solpass.store";
 
 import type { UploadChangeParam } from 'antd/es/upload';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import moment from "moment";
 
 
 
@@ -50,34 +51,72 @@ export const Status0 = (props: {}) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   //radio value controller
-  const [value, setValue] = useState(0);
+  const [burnAuthValue, setBurnAuthValue] = useState(0);
+  const [expHidden, setExpHidden] = useState(1);
+  const [expDate, setExpDate] = useState<Date>(null);
+  const [uploadCheck, setUploadCheck] = useState(false);
 
-  const radioOnChange = (e: RadioChangeEvent) => {
+  const expRadioOnChange = (e: RadioChangeEvent) => {
+    if (e.target.value === 1) {
+      solpassStore.info.expirationDate = null;
+    }
+    else {
+      solpassStore.info.expirationDate = expDate;
+    }
+    console.log('radio sol', solpassStore.info.expirationDate);
+    setExpHidden(e.target.value);
+  };
+
+  const dateOnChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(date, dateString);
+    let realDate = null;
+    if (date !== null) {
+      realDate = date.toDate();
+      setExpDate(realDate);
+    }
+    solpassStore.info.expirationDate = realDate;
+    console.log('realDate', realDate);
+    console.log('sol expiration', solpassStore.info.expirationDate);
+  };
+
+  const burnAuthRadioOnChange = (e: RadioChangeEvent) => {
     solpassStore.info.burnAuth = e.target.value;
-    setValue(e.target.value);
+    setBurnAuthValue(e.target.value);
+    console.log('burn sol', solpassStore.info.burnAuth);
   };
 
   const beforeUpload = (file: RcFile) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
       message.error('You can only upload JPG/PNG file!');
+      setUploadCheck(false);
+      return false;
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
       message.error('Image must smaller than 2MB!');
+      setUploadCheck(false);
+      return false;
     }
+    setUploadCheck(true);
     return false;
   };
 
   const uploadToIPFS = async (event) => {
+    if (uploadCheck === false) {
+      console.log('invalid file');
+      return;
+    }
     console.log('Upload initiated')
     const file = event.file
     if (typeof file !== 'undefined') {
       try {
         const result = await client.add(file)
         console.log(result)
-        solpassStore.info.cover = `https://ipfs.infura.io/ipfs/${result.path}`
+        solpassStore.info.cover = result.path
         setImageUrl(`https://ipfs.infura.io/ipfs/${result.path}`)
+        console.log('sol expiration', solpassStore.info.expirationDate);
+        console.log('sol burnAuth', solpassStore.info.burnAuth);
       } catch (error) {
         console.log("ipfs image upload error: ", error)
       }
@@ -190,6 +229,16 @@ export const Status0 = (props: {}) => {
         </Input.Group>
       </Form.Item>
 
+      <Form.Item label='Solpass Name'>
+        <Input
+          placeholder='Name your pass'
+          value={solpassStore.info.nftName}
+          style={{ width: "calc(100% - 120px)" }}
+          onChange={(e) => {
+            solpassStore.info.nftName = e.target.value;
+          }}
+        />
+      </Form.Item>
       <Form.Item label='Description'>
         <Input.TextArea
           placeholder='This pass is used for...'
@@ -199,6 +248,16 @@ export const Status0 = (props: {}) => {
             solpassStore.info.Acomment = e.target.value;
           }}
         />
+      </Form.Item>
+      <Form.Item label='Expiration Date'>
+        <Radio.Group onChange={expRadioOnChange} value={expHidden} >
+          <Radio value={0}>
+            <DatePicker onChange={dateOnChange} disabledDate={(current) => {
+              return moment().add(-1, 'days') >= current;
+            }} disabled={expHidden === 1} />
+          </Radio>
+          <Radio value={1}>Never Expires</Radio>
+        </Radio.Group>
       </Form.Item>
       <Form.Item
         label={
@@ -211,7 +270,7 @@ export const Status0 = (props: {}) => {
             </Tooltip>
           </span>
         }>
-        <Radio.Group onChange={radioOnChange} value={value}>
+        <Radio.Group onChange={burnAuthRadioOnChange} value={burnAuthValue}>
           <Radio value={0}>Issuer Only</Radio>
           <Radio value={1}>Receiver Only</Radio>
           <Radio value={2}>Both Parties</Radio>

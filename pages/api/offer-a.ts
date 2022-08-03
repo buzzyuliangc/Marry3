@@ -37,6 +37,9 @@ const handler: NextApiHandler = async (req, res) => {
         Acomment: req.body.Acomment,
         cover: req.body.cover,
         bgIndex: Math.floor(Math.random() * 9) + 1,
+        burnAuth: req.body.burnAuth,
+        nftName: req.body.nftName,
+        expirationDate: req.body.expirationDate,
       };
       if (!data.cover?.startsWith("http")) {
         data.cover = "";
@@ -46,6 +49,18 @@ const handler: NextApiHandler = async (req, res) => {
           message: "name empty",
         });
       }
+      if (data.burnAuth === undefined || data.burnAuth === null || data.burnAuth < 0 || data.burnAuth > 3) {
+        return res.status(400).json({
+          message: "invalid burnauth",
+        });
+      }
+      if (!data.nftName) {
+        return res.status(400).json({
+          message: "nftName empty",
+        });
+      }
+
+      console.log(req.body);
 
       // one offer one day
       const result = await prisma.offers.findFirst({

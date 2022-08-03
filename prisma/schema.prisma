@@ -15,6 +15,7 @@ model Offers {
     type       Int       @default(0) // 0 = 结婚, 1 = 离婚
     Aaddress   String
     Baddress   String?
+    contractId String?
     Asignature String
     Bsignature String?
     Asex       Int?
@@ -37,10 +38,15 @@ model Offers {
     bgIndex    Int?
     blockNo    String?
     mintedAt   DateTime?
+    burnAuth   Int?     @default(0)
+    nftName    String?
+    expirationDate DateTime?
 }
 
-model ContractAddr {
+model Contract {
     id         String    @id @default(uuid())
+    Caddress   String    
     Iaddress   String
-    Caddress   String[]    
+    nftName    String
+    burnAuth   Int 
 }
