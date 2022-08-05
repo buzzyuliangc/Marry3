@@ -105,16 +105,19 @@ export class SolpassStore implements IStore {
             nftName: this.info.nftName,
             expirationDate: this.info.expirationDate,
         };
-        if (!body.Acomment) {
-            message.error("solpass description empty");
+        if (!body.cover) {
+            message.error("solpass cover empty");
             return;
+        }
+        if (!body.Aname) {
+            message.error('solpass issuer name empty');
         }
         if (!body.nftName) {
             message.error("solpass name empty");
             return;
         }
-        if (!body.cover) {
-            message.error("solpass cover empty");
+        if (!body.Acomment) {
+            message.error("solpass description empty");
             return;
         }
         if (body.Aname?.indexOf(".eth") != -1) {

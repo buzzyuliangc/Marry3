@@ -1,7 +1,7 @@
 const config = {
   site: 1,
   network: {
-    url: "https://rinkeby.infura.io/v3/f4dd6db18a6f4ea98151892c0fa8e074",
+    url: "https://rinkeby.infura.io/v3/46cc0b1caf224e62923403662237ece9",
     chainId: 4,
     gas: "auto",
     gasPrice: "auto",
@@ -50,7 +50,7 @@ const config_local = {
 const config_online = {
   site: 1,
   network: {
-    url: "https://mainnet.infura.io/v3/f4dd6db18a6f4ea98151892c0fa8e074",
+    url: "https://mainnet.infura.io/v3/46cc0b1caf224e62923403662237ece9",
     chainId: 1,
     gas: "auto",
     gasPrice: "auto",

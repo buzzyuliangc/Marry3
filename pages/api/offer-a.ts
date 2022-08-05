@@ -41,8 +41,10 @@ const handler: NextApiHandler = async (req, res) => {
         nftName: req.body.nftName,
         expirationDate: req.body.expirationDate,
       };
-      if (!data.cover?.startsWith("http")) {
-        data.cover = "";
+      if (!data.cover) {
+        return res.status(400).json({
+          message: "cover picture empty",
+        });
       }
       if (!data.Aname) {
         return res.status(400).json({
@@ -61,9 +63,10 @@ const handler: NextApiHandler = async (req, res) => {
       }
 
       console.log(req.body);
+      console.log('data', data);
 
       // one offer one day
-      const result = await prisma.offers.findFirst({
+      /*const result = await prisma.offers.findFirst({
         where: {
           Aaddress: data.Aaddress,
           status: {
@@ -80,11 +83,12 @@ const handler: NextApiHandler = async (req, res) => {
         return res.status(400).json({
           message: "you have not finished offer",
         });
-      }
+      }*/
       // create offer
       const offer = await prisma.offers.create({
         data: data,
       });
+      console.log('offer', offer);
       if (offer) {
         delete offer.Asignature;
         delete offer.Bsignature;

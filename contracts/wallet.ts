@@ -12,32 +12,14 @@ import WalletConnect from "@walletconnect/web3-provider";
 // import Torus from "@toruslabs/torus-embed";
 
 const providerOptions = {
-  /* See Provider Options Section */
-  // huobi: {
-  //   display: {
-  //     logo: "/huobi-token.jpeg",
-  //     name: "Injected",
-  //     description: "Connect with the provider in your Browser",
-  //   },
-  //   package: null,
-  // },
+
 
   walletconnect: {
     package: WalletConnect,
     options: {
-      infuraId: "29N8IEWHRA4oUiY5hOnSKS1wMER",
+      infuraId: "46cc0b1caf224e62923403662237ece9",
     },
   },
-  // // torus: {
-  // //   package: Torus,
-  // // },
-  // walletlink: {
-  //   package: WalletLink,
-  //   options: {
-  //     appName: "Web3Modal Example App",
-  //     infuraId: "pk_test_391E26A3B43A3350",
-  //   },
-  // },
 };
 
 class Wallet extends EventEmitter {

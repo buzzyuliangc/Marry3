@@ -36,7 +36,7 @@ export const MainBanner = (props: {}) => {
             style={{ left: 0, top: "-100px" }}
           ></div>
           <h1 className={styles.title}>
-            Prove your social status with a permanment soulbound token stored on the chain.
+            Prove your social status with a permanent soulbound token stored on the chain.
             <img src="/fly.png" className={styles.fly} title="fly" />
           </h1>
           <h2 className={styles.subInfo}>
